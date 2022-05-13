@@ -1,6 +1,6 @@
 FROM mysql/mysql-server:8.0
 
-ENV MYSQL_DATABASE=laravel \
+ENV MYSQL_DATABASE=laravel_news_app \
     MYSQL_USER=root \
     MYSQL_PASSWORD=secret \
     MYSQL_ROOT_PASSWORD=secret \
