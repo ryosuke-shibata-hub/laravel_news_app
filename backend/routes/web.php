@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
+use App\Http\Controllers\User\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,3 +26,6 @@ require __DIR__.'/auth.php';
 
 Route::get('/',[TopController::class,'top'])
 ->name('top');
+
+route::get('/user/{id}/index',[PostController::class,'index'])
+->name('user.index');
