@@ -3,11 +3,11 @@
 
 @include('user.parts.sidebar_user')
 @section('content')
-<div class="h-screen overflow-scroll">
+<div class="h-screen overflow-y-scroll">
     <div class="px-4 sm:px-4">
         <div class="flex justify-between">
             <div class="pt-4">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-md text-1xl font-midium hover:bg-blue-700
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-md text-1xl font-medium hover:bg-blue-700
                     transition duration-300">新規追加
                 </button>
             </div>
@@ -45,35 +45,66 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($posts as $post)
                             <tr>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm w-40">
                                     <p class="text-left text-gray-900 whitespace-nowrap">
-                                        Laravel9ニュースサイト
+                                        {{ $post->title }}
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p class="text-left text-gray-900 whitespace-nowrap">
-                                        215
+                                    <p class="text-center text-gray-900 whitespace-nowrap">
+                                        {{ $post->id }}
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                                    <span class="bg-green-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium">
-                                        Category
-                                    </span>
-                                </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                                    <span class="relative inline-block px-3 py-1 font-semibold text-gray-900 leading-tight">
-                                        <span aria-hidden="true" class="absolute inset-0 bg-gray-200 opacity-50 rounded-full">
+                                    <span class="relative inline-block px-3 py-1 font-semibold text-white leading-tight">
+                                        <span aria-hidden="true" class="absolute inset-0 bg-green-500 rounded-full">
                                         </span>
                                         <span class="relative">
-                                            公開済み
+                                            @if(isset($post->category_id))
+                                                {{ $post->category->category_name }}
+                                            @else
+                                                カテゴリーなし
+                                            @endif
                                         </span>
                                     </span>
                                 </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                                    @if($post->publish_flg === 0)
+                                        <span class="relative inline-block px-3 py-1 font-semibold text-blue-900
+                                            leading-tight">
+                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 opacity-50 rounded-full">
+                                            </span>
+                                            <span class="relative">下書き保存</span>
+                                        </span>
+                                    @elseif($post->publish_flg === 1)
+                                        <span class="relative inline-block px-3 py-1 font-semibold text-blue-900
+                                            leading-tight">
+                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 opacity-50 rounded-full">
+                                            </span>
+                                            <span class="relative">公開済み</span>
+                                        </span>
+                                    @elseif($post->publish_flg === 2)
+                                        <span class="relative inline-block px-3 py-1 font-semibold text-blue-900
+                                            leading-tight">
+                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 opacity-50 rounded-full">
+                                            </span>
+                                            <span class="relative">予約公開</span>
+                                        </span>
+                                    @else
+                                        <span class="relative inline-block px-3 py-1 font-semibold text-blue-900
+                                                leading-tight">
+                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 opacity-50 rounded-full">
+                                            </span>
+                                            <span class="relative">下書き保存</span>
+                                        </span>
+                                    @endif
+                                </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <a class="text-center text-gray-900 whitespace-nowrap">
-                                        2022-03-28 12:12:12
-                                    </a>
+                                    <p class="text-center text-gray-900 whitespace-nowrap">
+                                        {{ $post->created_at }}
+                                    </p>
                                 </td>
                                 <td class="px-5 py-5 mr-5 border-b border-gray-200 bg-white text-sm">
                                     <a class="mr-3 text-blue-700 whitespace-nowrap underline" href="#">
@@ -85,15 +116,16 @@
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-center text-gray-900 whitespace-nowrap">
-                                        1,200
+                                        {{ $post->view_counter }}
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-center text-gray-900 whitespace-nowrap">
-                                        55
+                                        {{ $post->favorite_counter }}
                                     </p>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
