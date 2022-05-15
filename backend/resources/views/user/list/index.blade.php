@@ -7,9 +7,11 @@
     <div class="px-4 sm:px-4">
         <div class="flex justify-between">
             <div class="pt-4">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-md text-1xl font-medium hover:bg-blue-700
+                <a href="{{ route('post.create') }}">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md text-1xl font-medium hover:bg-blue-700
                     transition duration-300">新規追加
-                </button>
+                    </button>
+                </a>
             </div>
         </div>
         <div class="py-4">
