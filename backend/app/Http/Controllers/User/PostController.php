@@ -36,6 +36,7 @@ class PostController extends Controller
         ->with('categories',$categories);
     }
 
+    //新規記事投稿機能
     public function store(PostRequest $request)
     {
         $user = Auth::user();
@@ -57,5 +58,13 @@ class PostController extends Controller
         }
 
         return  to_route('user.index',['id' => $user_id]);
+    }
+    //記事詳細画面
+    public function show($post_id)
+    {
+        $showPostData = $this->post->feachPostDateByPostId($post_id);
+
+        return view('user.list.show')
+        ->with('showPostData',$showPostData);
     }
 }

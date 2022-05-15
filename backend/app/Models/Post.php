@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
+use App\Models\User;
 
 class Post extends Model
 {
@@ -25,6 +26,18 @@ class Post extends Model
         'updated_at',
     ];
 
+    //Userとのリレーション
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    //categoryとのリレーション
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     //ユーザーIDに紐づいた投稿リストを全権取得
     public function getAllPostsByUserId($user_id)
     {
@@ -34,10 +47,26 @@ class Post extends Model
         return $result;
     }
 
-    //categoryとのリレーション
-    public function category()
+    //投稿データの全取得&投稿順にソート&総合トップに表示する記事は「公開」ステータス
+    public function getPostsSortByLatestUpdate()
     {
-        return $this->belongsTo(Category::class);
+        $result = $this->where('publish_flg',1)
+                       ->orderby('updated_at','desc')
+                       ->with('user')
+                       ->with('category')
+                       ->get();
+
+        return $result;
+
+    }
+
+    //トップ画面カテゴリごとの表示
+    public function getPostByCategoryId($category_id)
+    {
+        $result = $this->where('category_id',$category_id)
+                       ->get();
+
+        return $result;
     }
 
     //下書き保存のロジック
@@ -90,6 +119,13 @@ class Post extends Model
             'favorite_counter' => 0,
             'delete_flg' => 0,
         ]);
+
+        return $result;
+    }
+
+    public function feachPostDateByPostId($post_id)
+    {
+        $result = $this->find($post_id);
 
         return $result;
     }

@@ -24,8 +24,15 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+//トップ画面
 Route::get('/',[TopController::class,'top'])
 ->name('top');
+//トップ画面記事詳細
+Route::get('/article/{post_id}',[TopController::class,'articleShow'])
+->name('top.article.show');
+//トップ画面カテゴリーごとの表示
+Route::get('article/category/{category_id}',[TopController::class,'articleCategory'])
+->name('top.article.category');
 
 Route::get('/user/{id}/index',[PostController::class,'index'])
 ->name('user.index');
@@ -35,3 +42,6 @@ Route::get('/post/create', [PostController::class,'create'])
 
 Route::post('/post/store',[PostController::class,'store'])
 ->name('post.store');
+
+Route::get('/post/show/{post_id}',[PostController::class,'show'])
+->name('post.show');
