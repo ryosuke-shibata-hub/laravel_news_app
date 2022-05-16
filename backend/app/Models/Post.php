@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 
 class Post extends Model
 {
@@ -42,7 +43,9 @@ class Post extends Model
     public function getAllPostsByUserId($user_id)
     {
         $result = $this->where('user_id',$user_id)
-        ->with('category')->get();
+        ->with('category')
+        ->orderby('updated_at','desc')
+        ->get();
 
         return $result;
     }
@@ -126,6 +129,49 @@ class Post extends Model
     public function feachPostDateByPostId($post_id)
     {
         $result = $this->find($post_id);
+
+        return $result;
+    }
+
+    public function updatePostToSaveDraft($request,$post)
+    {
+        // dd($post);
+        $result = $post->fill([
+            'category_id' => $request->category,
+            'title' => $request->title,
+            'body' => $request->body,
+            'publish_flg' => 0,
+        ]);
+
+        $result->save();
+
+        return $result;
+    }
+
+    public function updatePostToRelease($request,$post)
+    {
+        $result = $post->fill([
+            'category_id' => $request->category,
+            'title' => $request->title,
+            'body' => $request->body,
+            'publish_flg' => 1,
+        ]);
+
+        $result->save();
+
+        return $result;
+    }
+
+        public function updatePostToReservationRelease($request,$post)
+    {
+        $result = $post->fill([
+            'category_id' => $request->category,
+            'title' => $request->title,
+            'body' => $request->body,
+            'publish_flg' => 2,
+        ]);
+
+        $result->save();
 
         return $result;
     }

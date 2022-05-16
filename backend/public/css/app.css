@@ -1377,6 +1377,14 @@ select {
   --tw-text-opacity: 1;
   color: rgb(180 83 9 / var(--tw-text-opacity));
 }
+.text-green-900 {
+  --tw-text-opacity: 1;
+  color: rgb(20 83 45 / var(--tw-text-opacity));
+}
+.text-amber-900 {
+  --tw-text-opacity: 1;
+  color: rgb(120 53 15 / var(--tw-text-opacity));
+}
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;

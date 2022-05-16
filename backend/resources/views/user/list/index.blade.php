@@ -36,6 +36,9 @@
                                     text-center text-sm uppercase font-normal">日付
                                 </th>
                                 <th scope="col" class="px-5 py-3 bg-white border-b border-gray-200 text-gray-800
+                                    text-center text-sm uppercase font-normal">最終更新日
+                                </th>
+                                <th scope="col" class="px-5 py-3 bg-white border-b border-gray-200 text-gray-800
                                     text-left text-sm uppercase font-normal">操作
                                 </th>
                                 <th scope="col" class="px-5 py-3 bg-white border-b border-gray-200 text-gray-800
@@ -78,21 +81,21 @@
                                     @if($post->publish_flg === 0)
                                         <span class="relative inline-block px-3 py-1 font-semibold text-blue-900
                                             leading-tight">
-                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 opacity-50 rounded-full">
+                                            <span aria-hidden="true" class="absolute inset-0 bg-blue-200 opacity-50 rounded-full">
                                             </span>
                                             <span class="relative">下書き保存</span>
                                         </span>
                                     @elseif($post->publish_flg === 1)
-                                        <span class="relative inline-block px-3 py-1 font-semibold text-blue-900
+                                        <span class="relative inline-block px-3 py-1 font-semibold text-green-900
                                             leading-tight">
                                             <span aria-hidden="true" class="absolute inset-0 bg-green-200 opacity-50 rounded-full">
                                             </span>
                                             <span class="relative">公開済み</span>
                                         </span>
                                     @elseif($post->publish_flg === 2)
-                                        <span class="relative inline-block px-3 py-1 font-semibold text-blue-900
+                                        <span class="relative inline-block px-3 py-1 font-semibold text-amber-900
                                             leading-tight">
-                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 opacity-50 rounded-full">
+                                            <span aria-hidden="true" class="absolute inset-0 bg-amber-200 opacity-50 rounded-full">
                                             </span>
                                             <span class="relative">予約公開</span>
                                         </span>
@@ -108,6 +111,11 @@
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-center text-gray-900 whitespace-nowrap">
                                         {{ $post->created_at }}
+                                    </p>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <p class="text-center text-gray-900 whitespace-nowrap">
+                                        {{ $post->updated_at }}
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 mr-5 border-b border-gray-200 bg-white text-sm">

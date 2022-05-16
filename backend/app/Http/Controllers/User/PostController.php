@@ -78,4 +78,30 @@ class PostController extends Controller
         ->with('categories',$categories)
         ->with('posts',$posts);
     }
+
+    public function update(PostRequest $request,$post_id)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $post = $this->post->feachPostDateByPostId($post_id);
+
+        //$request,$postの順番でリクエストを飛ばさないとエラーになる
+        switch (true) {
+            case $request->has('save_draft'):
+                $this->post->updatePostToSaveDraft($request,$post);
+                break;
+            case $request->has('release'):
+                $this->post->updatePostToRelease($request,$post);
+                break;
+            case $request->has('reservation_release'):
+                $this->post->updatePostToReservationRelease($request,$post);
+                break;
+            default:
+                $this->post->updatePostToSaveDraft($request,$post);
+                break;
+        }
+
+        return to_route('user.index',['id' => $user_id]);
+    }
+
 }

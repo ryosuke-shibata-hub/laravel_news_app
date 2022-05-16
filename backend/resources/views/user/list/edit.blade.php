@@ -9,7 +9,7 @@
 @elseif($posts->publish_flg === 2)
     <div class="bg-amber-200 text-center text-amber-700 font-bold">ステータス：予約公開</div>
 @endif
-<form action="" method="POST" class="p-5">
+<form action="{{ route('post.update',['post_id' => $posts->id]) }}" method="POST" class="p-5">
     @csrf
         @if($errors->any())
             <div class="flex shadow-lg rounded-sm">

@@ -24,7 +24,7 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255',
+            'title' => 'required|max:255'
         ];
     }
 
@@ -32,7 +32,7 @@ class PostRequest extends FormRequest
     {
         return [
             'title.required' => 'タイトルは必須です',
-            'title.max'      => 'タイトルは255文字以内で入力してください',
+            'title.max'      => 'タイトルは255文字以内で入力してください'
         ];
     }
 }
