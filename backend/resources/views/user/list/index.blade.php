@@ -119,12 +119,17 @@
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 mr-5 border-b border-gray-200 bg-white text-sm">
-                                    <a class="mr-3 text-blue-700 whitespace-nowrap underline" href="{{ route('post.edit',['post_id' => $post->id]) }}">
-                                        Edit
-                                    </a>
-                                    <a class="ml-5 underline text-red-700 whitespace-nowrap" href="#">
-                                        delete
-                                    </a>
+                                    <div class="flex">
+                                        <a class="mr-3 text-blue-700 whitespace-nowrap" href="{{ route('post.edit',['post_id' => $post->id]) }}">
+                                        編集
+                                        </a>
+                                        <form action="{{ route('post.move.trash',['post_id' => $post->id]) }}" method="POST" onsubmit="return is_move_trash()">
+                                            @csrf
+                                            <button type="submit" class="text-red-700 whitespace-nowrap">
+                                                ゴミ箱へ
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-center text-gray-900 whitespace-nowrap">
@@ -145,4 +150,17 @@
         </div>
     </div>
 </div>
+<script>
+    function is_move_trash() {
+        const moveTrashMessage = 'ゴミ箱に移動しますか？';
+        const cancelMessage = 'キャンセルされました';
+
+        if (window.confirm(moveTrashMessage)) {
+            return true;
+        } else {
+            window.alert(cancelMessage);
+            return false;
+        }
+    }
+</script>
 @endsection

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\User\PostController;
+use App\Http\Controllers\User\TrashController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,3 +51,10 @@ Route::get('/post/edit/{post_id}',[PostController::class,'edit'])
 ->name('post.edit');
 Route::post('/post/update/{post_id}',[PostController::class,'update'])
 ->name('post.update');
+
+Route::get('/post/trash',[TrashController::class,'trashList'])
+->name('post.trash');
+Route::post('/post/trash/{post_id}',[TrashController::class,'moveTrash'])
+->name('post.move.trash');
+Route::post('/post/restore/{post_id}',[TrashController::class,'restore'])
+->name('post.restore');

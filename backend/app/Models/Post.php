@@ -42,10 +42,13 @@ class Post extends Model
     //ユーザーIDに紐づいた投稿リストを全権取得
     public function getAllPostsByUserId($user_id)
     {
-        $result = $this->where('user_id',$user_id)
-        ->with('category')
-        ->orderby('updated_at','desc')
-        ->get();
+        $result = $this->where([
+            ['user_id',$user_id],
+            ['delete_flg',0],
+            ])
+            ->with('category')
+            ->orderby('updated_at','desc')
+            ->get();
 
         return $result;
     }
@@ -53,7 +56,10 @@ class Post extends Model
     //投稿データの全取得&投稿順にソート&総合トップに表示する記事は「公開」ステータス
     public function getPostsSortByLatestUpdate()
     {
-        $result = $this->where('publish_flg',1)
+        $result = $this->where([
+                        ['publish_flg',1],
+                        ['delete_flg',0],
+                        ])
                        ->orderby('updated_at','desc')
                        ->with('user')
                        ->with('category')
@@ -169,6 +175,38 @@ class Post extends Model
             'title' => $request->title,
             'body' => $request->body,
             'publish_flg' => 2,
+        ]);
+
+        $result->save();
+
+        return $result;
+    }
+
+    //ゴミ箱の一覧
+    public function getTrashPostLists($user_id)
+    {
+        $result = $this->where([
+            ['user_id',$user_id],
+            ['delete_flg',1],
+        ])->get();
+
+        return $result;
+    }
+
+    public function moveTrashPostData($post)
+    {
+        $result = $post->fill([
+            'delete_flg' => 1,
+        ]);
+        $result->save();
+
+        return $result;
+    }
+
+    public function restorePostData($post)
+    {
+        $result = $post->fill([
+            'delete_flg' => 0,
         ]);
 
         $result->save();
