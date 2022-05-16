@@ -67,4 +67,15 @@ class PostController extends Controller
         return view('user.list.show')
         ->with('showPostData',$showPostData);
     }
+
+    public function edit($post_id)
+    {
+
+        $categories = $this->category->getAllCategories();
+        $posts = $this->post->feachPostDateByPostId($post_id);
+
+        return view('user.list.edit')
+        ->with('categories',$categories)
+        ->with('posts',$posts);
+    }
 }

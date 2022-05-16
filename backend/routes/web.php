@@ -45,3 +45,8 @@ Route::post('/post/store',[PostController::class,'store'])
 
 Route::get('/post/show/{post_id}',[PostController::class,'show'])
 ->name('post.show');
+
+Route::get('/post/edit/{post_id}',[PostController::class,'edit'])
+->name('post.edit');
+Route::post('/post/edit/{post_id}',[PostController::class,'update'])
+->name('post.update');

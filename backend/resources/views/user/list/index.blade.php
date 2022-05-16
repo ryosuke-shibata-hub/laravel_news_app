@@ -111,7 +111,7 @@
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 mr-5 border-b border-gray-200 bg-white text-sm">
-                                    <a class="mr-3 text-blue-700 whitespace-nowrap underline" href="#">
+                                    <a class="mr-3 text-blue-700 whitespace-nowrap underline" href="{{ route('post.edit',['post_id' => $post->id]) }}">
                                         Edit
                                     </a>
                                     <a class="ml-5 underline text-red-700 whitespace-nowrap" href="#">
