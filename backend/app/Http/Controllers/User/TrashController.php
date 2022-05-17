@@ -55,4 +55,19 @@ class TrashController extends Controller
         ->with('user_id',$user_id)
         ->with('trash_posts',$trash_posts);
     }
+
+    public function delete($post_id)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $trash_posts = $this->post->getTrashPostLists($user_id);
+
+        $post = $this->post->feachPostDateByPostId($post_id);
+
+        $deletePost = $this->post->deletePostData($post);
+
+        return to_route('post.trash')
+        ->with('user_id',$user_id)
+        ->with('trash_posts',$trash_posts);
+    }
 }

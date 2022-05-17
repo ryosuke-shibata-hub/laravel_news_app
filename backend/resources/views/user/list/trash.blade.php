@@ -83,7 +83,7 @@
                                     </td>
                                     <td class="px-5 py-5 mr-5 border-b border-gray-200 bg-white text-sm">
                                         <div class="flex">
-                                            <form action="" method="POST">
+                                            <form action="{{ route('post.delete',['post_id' => $post->id]) }}" method="POST" onsubmit="return is_delete_check()">
                                                 @csrf
                                                     <button type="submit" class="text-red-700 whitespace-nowrap">
                                                         削除
@@ -118,6 +118,17 @@
         if (window.confirm(restoreMessage)) {
             return true;
         } else {
+            window.alert(cancelMessage);
+            return false;
+        }
+    }
+    function is_delete_check() {
+        const deleteMessage = '記事を完全に削除しますか？';
+        const cancelMessage = 'キャンセルされました';
+
+        if(window.confirm(deleteMessage)) {
+            return true;
+        }else{
             window.alert(cancelMessage);
             return false;
         }
