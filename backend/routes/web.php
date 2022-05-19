@@ -38,6 +38,9 @@ Route::controller(PostController::class)->group(function() {
     Route::get('/post/show/{post_id}','show')->name('post.show');
     Route::get('/post/edit/{post_id}','edit')->name('post.edit');
     Route::post('/post/update/{post_id}','update')->name('post.update');
+    Route::get('/post/saveDraft','saveDraft')->name('post.saveDraft');
+    Route::get('/post/release','release')->name('post.release');
+    Route::get('/post/reservationRelease','reservationRelease')->name('post.reservationRelease');
 });
 
 Route::controller(TrashController::class)->group(function() {

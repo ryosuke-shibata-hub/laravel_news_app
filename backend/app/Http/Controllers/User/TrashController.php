@@ -39,7 +39,8 @@ class TrashController extends Controller
 
         $trash_posts = $this->post->moveTrashPostData($post);
 
-        return to_route('user.index',['id' => $user_id]);
+        return to_route('user.index',['id' => $user_id])
+        ->with('moveTrash','記事をゴミ箱に移しました');
     }
 
     public function restore($post_id)
@@ -53,7 +54,8 @@ class TrashController extends Controller
 
         return to_route('post.trash')
         ->with('user_id',$user_id)
-        ->with('trash_posts',$trash_posts);
+        ->with('trash_posts',$trash_posts)
+        ->with('restore','記事を復元しました');
     }
 
     public function delete($post_id)
@@ -68,6 +70,7 @@ class TrashController extends Controller
 
         return to_route('post.trash')
         ->with('user_id',$user_id)
-        ->with('trash_posts',$trash_posts);
+        ->with('trash_posts',$trash_posts)
+        ->with('delete','記事を完全に削除しました');
     }
 }

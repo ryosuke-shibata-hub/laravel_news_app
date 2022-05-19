@@ -1,14 +1,13 @@
-{{-- commmon.bladeの継承 --}}
+{{-- common.bladeの継承 --}}
 @extends('layouts.common')
 @include('user.parts.sidebar_user')
 @section('content')
-@component('components.flash-message')
-@endcomponent
+
 <div class="h-screen overflow-scroll">
     <div class="px-4 sm:px-4">
         <div class="flex justify-between">
             <div class="text-2xl font-bold pt-7">
-                ゴミ箱
+                下書き保存一覧
             </div>
         </div>
         <div class="py-4">
@@ -44,10 +43,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($trash_posts as $post)
+                            @foreach($saveDraft as $post)
                                 <tr>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm w-40">
-                                        <a href="{{ route('post.show',['post_id' => $post->id]) }}" class="hover:underline">
+                                        <a href="{{ route('post.show',['post_id' => $post->id]) }}" class="hover:underline ">
                                             <p class="text-left text-gray-900 whitespace-nowrap">
                                                 {{ $post->title }}
                                             </p>
@@ -71,12 +70,35 @@
                                         </span>
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                                        <form action="{{ route('post.restore',['post_id' => $post->id]) }}" method="POST" onsubmit="return is_restore_check()">
-                                            @csrf
-                                                <button type="submit" class="mr-3 text-blue-700 whitespace-nowrap">
-                                                    投稿を復元する
-                                                </button>
-                                        </form>
+                                        @if($post->publish_flg === 0)
+                                            <span class="relative inline-block px-3 py-1 font-semibold text-blue-900 leading-tight">
+                                                <span aria-hidden="true" class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                                <span class="relative">
+                                                    下書き保存
+                                                </span>
+                                            </span>
+                                        @elseif($post->publish_flg === 1)
+                                            <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                <span aria-hidden="true" class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                <span class="relative">
+                                                    公開済み
+                                                </span>
+                                            </span>
+                                        @elseif($post->publish_flg === 2)
+                                            <span class="relative inline-block px-3 py-1 font-semibold text-amber-900 leading-tight">
+                                                <span aria-hidden="true" class="absolute inset-0 bg-amber-200 opacity-50 rounded-full"></span>
+                                                <span class="relative">
+                                                    予約公開
+                                                </span>
+                                            </span>
+                                        @else
+                                            <span class="relative inline-block px-3 py-1 font-semibold text-blue-900 leading-tight">
+                                                <span aria-hidden="true" class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                                <span class="relative">
+                                                    下書き保存
+                                                </span>
+                                            </span>
+                                        @endif
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <p class="text-center text-gray-900 whitespace-nowrap">
@@ -85,11 +107,15 @@
                                     </td>
                                     <td class="px-5 py-5 mr-5 border-b border-gray-200 bg-white text-sm">
                                         <div class="flex">
-                                            <form action="{{ route('post.delete',['post_id' => $post->id]) }}" method="POST" onsubmit="return is_delete_check()">
-                                                @csrf
-                                                    <button type="submit" class="text-red-700 whitespace-nowrap">
-                                                        削除
-                                                    </button>
+                                            <a class="mr-3 text-blue-700 whitespace-nowrap underline"
+                                                href="{{ route('post.edit',['post_id' => $post->id]) }}">
+                                                Edit
+                                            </a>
+                                            <form action="{{ route('post.move.trash',['post_id' => $post->id]) }}" method="POST" onsubmit="return is_move_trash()">
+                                            @csrf
+                                                <button type="submit" class="underline text-red-700 whitespace-nowrap">
+                                                    Trash
+                                                </button>
                                             </form>
                                         </div>
                                     </td>
@@ -113,22 +139,11 @@
     </div>
 </div>
 <script>
-    function is_restore_check() {
-        const restoreMessage = '記事を復元しますか？';
+    function is_move_trash() {
+        const moveTrashMessage = 'ゴミ箱に移動しますか?';
         const cancelMessage = 'キャンセルされました';
 
-        if (window.confirm(restoreMessage)) {
-            return true;
-        } else {
-            window.alert(cancelMessage);
-            return false;
-        }
-    }
-    function is_delete_check() {
-        const deleteMessage = '記事を完全に削除しますか？';
-        const cancelMessage = 'キャンセルされました';
-
-        if(window.confirm(deleteMessage)) {
+        if(window.confirm(moveTrashMessage)) {
             return true;
         }else{
             window.alert(cancelMessage);
@@ -136,4 +151,5 @@
         }
     }
 </script>
+
 @endsection

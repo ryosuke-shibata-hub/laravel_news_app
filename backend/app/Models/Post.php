@@ -221,4 +221,44 @@ class Post extends Model
         $result = $post->delete();
         return $result;
     }
+
+    public function getSaveDraft($user_id)
+    {
+        $result = $this->where([
+            ['user_id',$user_id],
+            ['publish_flg',0],
+            ['delete_flg',0]
+        ])
+        ->orderby('updated_at','desc')
+        ->get();
+
+        return $result;
+    }
+
+    public function getReleasePost($user_id)
+    {
+        $result = $this->where([
+            ['user_id',$user_id],
+            ['publish_flg',1],
+            ['delete_flg',0]
+        ])
+        ->orderby('updated_at')
+        ->get();
+
+        return $result;
+    }
+
+    public function getResaervationRelease($user_id)
+    {
+        $result = $this->where([
+            ['user_id',$user_id],
+            ['publish_flg',2],
+            ['delete_flg',0]
+        ])
+        ->orderby('updated_at','desc')
+        ->get();
+
+        return $result;
+
+    }
 }
