@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
@@ -51,10 +51,10 @@ class PostController extends Controller
                 $this->post->insertPostToSaveRelease($user_id,$request);
                 $request->session()->flash('release','記事を投稿しました');
                 break;
-            case $request->has('reservation_release'):
-                $this->post->insertPostToSaveReservationRelease($user_id,$request);
-                $request->session()->flash('reservationRelease','記事を予約公開しました');
-                break;
+            // case $request->has('reservation_release'):
+            //     $this->post->insertPostToSaveReservationRelease($user_id,$request);
+            //     $request->session()->flash('reservationRelease','記事を予約公開しました');
+            //     break;
             default:
                 $this->post->insertPostToSaveDraft($user_id,$request);
                 $request->session()->flash('saveDraft','記事を下書きで保存しました。');

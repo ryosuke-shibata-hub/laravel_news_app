@@ -45,7 +45,7 @@
                 duration-200 transform bg-green-500 rounded-md hover:bg-green-400">
                     公開
                 </button>
-                <button type="submit" name="reservation_release" class="px-4 py-2 ml-8 text-white text-lg transition-colors
+                <button formaction="{{ route('reservation.post') }}" formmethod="GET" type="submit" name="reservation_release" class="px-4 py-2 ml-8 text-white text-lg transition-colors
                 duration-200 transform bg-amber-500 rounded-md hover:bg-amber-400">
                     予約公開
                 </button>

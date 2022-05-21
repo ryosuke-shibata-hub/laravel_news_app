@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\User\PostController;
 use App\Http\Controllers\User\TrashController;
+use App\Http\Controllers\User\ReservationPostController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,6 +50,12 @@ Route::controller(TrashController::class)->group(function() {
     Route::post('/post/trash/{post_id}','moveTrash')->name('post.move.trash');
     Route::post('/post/restore/{post_id}','restore')->name('post.restore');
     Route::post('/post/delete/{post_id}','delete')->name('post.delete');
+});
+
+Route::controller(ReservationPostController::class)->group(function() {
+    Route::get('/reservation/post/setting', 'reservationSetting')->name('reservation.post');
+    Route::post('/reservation/post/store', 'reservationStore')
+    ->name('reservation.post.store');
 });
 
 //トップ画面
