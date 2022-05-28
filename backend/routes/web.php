@@ -54,8 +54,9 @@ Route::controller(TrashController::class)->group(function() {
 
 Route::controller(ReservationPostController::class)->group(function() {
     Route::get('/reservation/post/setting', 'reservationSetting')->name('reservation.post');
-    Route::post('/reservation/post/store', 'reservationStore')
-    ->name('reservation.post.store');
+    Route::post('/reservation/post/store', 'reservationStore')->name('reservation.post.store');
+    Route::get('/reservation/post/edit/{post_id}', 'reservationEdit')->name('reservation.post.edit');
+    Route::post('/reservation/post/edit/{post_id}','reservationUpdate')->name('reservation.post.update');
 });
 
 //トップ画面

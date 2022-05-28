@@ -28,4 +28,26 @@ class ReservationPost extends Model
             'reservation_time' => $reservation_time,
         ]);
     }
+
+    public function getReservationPostByUserIdAndPostId($user_id,$post_id)
+    {
+        return $this->where([
+            ['user_id',$user_id],
+            ['post_id',$post_id],
+        ])
+        ->first();
+    }
+
+    public function updateReservationPost($reservationPost,$reservation_date,$reservation_time)
+    {
+        return $reservationPost->fill([
+            'reservation_date' => $reservation_date,
+            'reservation_time' => $reservation_time,
+        ])->save();
+    }
+
+    public function deleteData($reservationPost)
+    {
+        return $reservationPost->delete();
+    }
 }

@@ -7,16 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\ReservationPost;
 
 class TrashController extends Controller
 {
     private $post;
     private $category;
+    private $reservationPost;
 
     public function __construct()
     {
         $this->post = new Post();
         $this->category = new Category();
+        $this->reservationPost = new ReservationPost();
     }
 
     public function trashList()
@@ -36,6 +39,11 @@ class TrashController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
         $post = $this->post->feachPostDateByPostId($post_id);
+
+        $reservationPost = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
+        if(isset($reservationPost)) {
+            $this->reservationPost->deleteData($reservationPost);
+        }
 
         $trash_posts = $this->post->moveTrashPostData($post);
 
@@ -65,6 +73,11 @@ class TrashController extends Controller
         $trash_posts = $this->post->getTrashPostLists($user_id);
 
         $post = $this->post->feachPostDateByPostId($post_id);
+
+        $reservationPost = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
+        if(isset($reservationPost)) {
+            $this->reservationPost->deleteData($reservationPost);
+        }
 
         $deletePost = $this->post->deletePostData($post);
 
